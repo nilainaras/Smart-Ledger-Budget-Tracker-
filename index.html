@@ -28,12 +28,14 @@
 </head>
 
 <body>
-    <div class="container grid h-screen w-screen grid-cols-[18vw_82vw] grid-rows-[60px_1fr] font-global">
-        <aside class="row-span-2 bg-[#EDE9AF] text-white">
+    <div class="screen-dashboard grid h-screen w-screen grid-cols-[18vw_82vw] grid-rows-[60px_1fr] font-global">
+        <aside class="row-span-2 bg-[#EDE9AF] text-white relative">
             <section>
                 <img src="/assets/icons/logo.png" alt="logo" class="w-15 h-15 mt-4 ml-4">
-                <span class="font-prim text-2xl text-gray-950 absolute top-4.5 left-20 leading-7">Smart<br>Ledger</span>
-                <i data-lucide="panel-left-close" class="absolute top-8 left-52 text-gray-900 rounded-lg hover:cursor-pointer hover:scale-110"></i>
+                <span
+                    class="font-prim text-2xl text-blue-900 font-extrabold absolute top-4.5 left-20 leading-7">Smart<br>Ledger</span>
+                <i data-lucide="panel-left-close"
+                    class="absolute top-8 left-52 text-gray-900 rounded-lg hover:cursor-pointer hover:scale-105"></i>
             </section>
             <section class="mt-20 ml-8 flex flex-col gap-4">
                 <a href="#" class="menu"><i data-lucide="layout-grid" class="menu-icon"></i>&nbsp;&nbsp;Dashboard</a>
@@ -42,9 +44,19 @@
                 <a href="#" class="menu"><i data-lucide="settings" class="menu-icon"></i>&nbsp;&nbsp;Settings</a>
             </section>
         </aside>
-        <header class="bg-[#F4F5F7] text-white border-b-2 border-white">
-            <h1></h1>
+        <header class="bg-[#F4F5F7] text-white border-b-2 border-white flex items-center">
+            <h1 class="ml-4 text-2xl font-bold text-[darkslateblue] font-prim">Take control of your money</h1>
         </header>
+        <section class="absolute top-4 right-8 text-black flex gap-4">
+            <figure class="flex">
+                <input type="text" class="w-50 h-8 outline-none border rounded-lg absolute -top-1 right-17">
+                <i data-lucide="search" class="hover:cursor-pointer z-50 w-5 h-5" id="searchBtn"></i>
+            </figure>
+            <figure id="stateMode"><i data-lucide="moon" class="hover:cursor-pointer w-5 h-5"></i></figure>
+            <figure id="notification">
+                <i data-lucide="bell" class="hover:cursor-pointer z-50 w-5 h-5" id="notifBtn"></i>
+            </figure>
+        </section>
         <main class="bg-[#F4F5F7] p-5 overflow-y-auto">Main (Budget Tracker)</main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
