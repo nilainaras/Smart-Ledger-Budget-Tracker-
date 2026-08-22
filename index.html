@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <title>Smart Ledger</title>
+    <style type="text/tailwindcss">
+        @theme {
+            --font-prim : "Bricolage Grotesque", cursive;
+            --font-global : "Inter", sans-serif;
+        }
+        .menu {
+            @apply flex text-gray-950 text-xl;
+        }
+
+        .menu-icon {
+            @apply mt-px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container grid h-screen w-screen grid-cols-[18vw_82vw] grid-rows-[60px_1fr] font-global">
+        <aside class="row-span-2 bg-[#EDE9AF] text-white">
+            <section>
+                <img src="/assets/icons/logo.png" alt="logo" class="w-15 h-15 mt-4 ml-4">
+                <span class="font-prim text-2xl text-gray-950 absolute top-4.5 left-20 leading-7">Smart<br>Ledger</span>
+                <i data-lucide="panel-left-close" class="absolute top-8 left-52 text-gray-900 rounded-lg hover:cursor-pointer hover:scale-110"></i>
+            </section>
+            <section class="mt-20 ml-8 flex flex-col gap-4">
+                <a href="#" class="menu"><i data-lucide="layout-grid" class="menu-icon"></i>&nbsp;&nbsp;Dashboard</a>
+                <a href="#" class="menu"><i data-lucide="wallet" class="menu-icon"></i>&nbsp;&nbsp;Transaction</a>
+                <a href="#" class="menu"><i data-lucide="history" class="menu-icon"></i>&nbsp;&nbsp;History</a>
+                <a href="#" class="menu"><i data-lucide="settings" class="menu-icon"></i>&nbsp;&nbsp;Settings</a>
+            </section>
+        </aside>
+        <header class="bg-[#F4F5F7] text-white border-b-2 border-white">
+            <h1></h1>
+        </header>
+        <main class="bg-[#F4F5F7] p-5 overflow-y-auto">Main (Budget Tracker)</main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
