@@ -1,3 +1,5 @@
+import { renderPage } from './render.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('header');
     const searchBar = document.getElementById('searchBar');
@@ -8,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sideLeftTemplate = document.getElementById('sideLeft');
     const fullSidebar = document.getElementById('fullSide');
 
-    /*============ HEADER : recherche, clear, dark mode ============*/
+    /*============ HEADER : search, clear, dark mode ============*/
     header.addEventListener('click', (event) => {
         const searchBtn = event.target.closest('#searchBtn');
         if (searchBtn) {
@@ -20,21 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const stateModeBtn = event.target.closest('#stateMode');
         if (stateModeBtn) {
-            // 1. Ajoute ou supprime la classe 'dark' sur l'élément HTML global
             const isDark = document.documentElement.classList.toggle('dark');
-
-            if (isDark) {
-                stateModeBtn.innerHTML = '<i data-lucide="sun" class="hover:cursor-pointer w-5 h-5 text-yellow-400"></i>';
-            } else {
-                stateModeBtn.innerHTML = '<i data-lucide="moon" class="hover:cursor-pointer w-5 h-5 text-black"></i>';
-            }
-
+            stateModeBtn.innerHTML = isDark
+                ? '<i data-lucide="sun" class="hover:cursor-pointer w-5 h-5 text-yellow-400"></i>'
+                : '<i data-lucide="moon" class="hover:cursor-pointer w-5 h-5 text-black"></i>';
             lucide.createIcons();
             return;
         }
     });
 
-    // mousedown (pas click) pour pouvoir faire preventDefault() avant le blur de l'input
     header.addEventListener('mousedown', (event) => {
         const clearBtn = event.target.closest('#clearBtn');
         if (clearBtn) {
@@ -44,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // L'input lui-même n'est jamais recréé par lucide, un listener direct suffit ici
     searchInput.addEventListener('blur', () => {
         const searchBtn = document.getElementById('searchBtn');
         searchBar.classList.add('opacity-0', 'pointer-events-none');
@@ -54,18 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /*============ SIDEBAR : ouverture / fermeture / menu actif ============*/
-
-    // Etat persistant, indépendant du DOM : survit aux clonages de template
+    /*============ SIDEBAR : open / close / active menu / routing ============*/
     let activeMenu = 'dashboard';
 
     function applyActiveMenu() {
         sidebar.querySelectorAll('.menu').forEach((el) => {
-            if (el.dataset.menu === activeMenu) {
-                el.classList.add('menu-active');
-            } else {
-                el.classList.remove('menu-active');
-            }
+            el.classList.toggle('menu-active', el.dataset.menu === activeMenu);
         });
     }
 
@@ -81,18 +70,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const menuItem = event.target.closest('.menu');
         if (menuItem) {
+            event.preventDefault(); 
             activeMenu = menuItem.dataset.menu;
             applyActiveMenu();
+            renderPage(activeMenu); // loading active menu on the main side
         }
     });
 
     function showFullSidebar() {
         screenDash.style.gridTemplateColumns = "18vw 82vw";
         sidebar.innerHTML = "";
-
-        const fullcode = fullSidebar.content.cloneNode(true);
-        sidebar.appendChild(fullcode);
-
+        sidebar.appendChild(fullSidebar.content.cloneNode(true));
         lucide.createIcons();
         applyActiveMenu();
     }
@@ -100,11 +88,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function showReducedSidebar() {
         screenDash.style.gridTemplateColumns = "6vw 94vw";
         sidebar.innerHTML = "";
-
-        const clone = sideLeftTemplate.content.cloneNode(true);
-        sidebar.appendChild(clone);
-
+        sidebar.appendChild(sideLeftTemplate.content.cloneNode(true));
         lucide.createIcons();
         applyActiveMenu();
     }
+
+    /*============ Initial loading page ============*/
+    renderPage(activeMenu);
 });
