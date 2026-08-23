@@ -13,57 +13,165 @@
         rel="stylesheet">
     <title>Smart Ledger</title>
     <style type="text/tailwindcss">
+        /* 1. LIGNE CRITIQUE : Dit à Tailwind v4 de s'activer quand la classe .dark est sur la balise HTML */
+        @custom-variant dark (&:where(.dark, .dark *));
+
         @theme {
             --font-prim : "Bricolage Grotesque", cursive;
             --font-global : "Inter", sans-serif;
         }
+
         .menu {
-            @apply flex text-gray-950 text-xl;
+            @apply flex items-center text-gray-950 text-xl dark:text-slate-200 transition-colors duration-500;
         }
 
         .menu-icon {
             @apply mt-px;
         }
+
+        /* Titres : blanc cassé légèrement bleuté (cohérent avec l'accent sky) plutôt que du blanc pur */
+        h1, h2, h3, .title {
+            @apply text-gray-950 dark:text-slate-100 font-semibold;
+        }
+
+        /* ---- full sidebar---- */
+        .menu-active {
+            @apply relative bg-blue-900/10 px-3 py-2 rounded-xl text-blue-900 font-semibold
+                   shadow-sm shadow-blue-900/10
+                   dark:bg-sky-500/15 dark:text-sky-400 dark:shadow-sky-500/10
+                   transition-all duration-300 -ml-3;
+        }
+
+        .menu.menu-active:not(.menu-icon-only)::before {
+            content: "";
+            @apply absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-full
+                   bg-blue-900 dark:bg-sky-400;
+        }
+
+        /* ---- reduce sidebar---- */
+        .menu-icon-only {
+            @apply flex items-center justify-center w-10 h-10 px-0 py-0 rounded-xl;
+        }
+
+        .menu-icon-only.menu-active {
+            @apply relative bg-blue-900/10 text-blue-900
+                   dark:bg-sky-500/15 dark:text-sky-400
+                   transition-all duration-300 ml-1;
+        }
+
+        .menu-icon-only.menu-active::after {
+            content: "";
+            @apply absolute -bottom-2 left-1/2 -translate-x-1/2 h-2 w-2 rounded-full
+                   bg-blue-900 dark:bg-sky-400;
+        }
     </style>
+
 </head>
 
-<body>
-    <div class="screen-dashboard grid h-screen w-screen grid-cols-[18vw_82vw] grid-rows-[60px_1fr] font-global">
-        <aside class="row-span-2 bg-[#EDE9AF] text-white relative">
+<body data-theme="light">
+    <div
+        class="screen-dashboard grid h-screen w-screen grid-cols-[18vw_82vw] grid-rows-[60px_1fr] font-global dark:bg-slate-900 dark:text-white transition-colors duration-300">
+        <aside
+            class="row-span-2 bg-[#EDE9AF] text-white relative dark:bg-[#0D1220] dark:text-gray-100 transition-colors duration-300 dark:border-r dark:border-slate-300/10"
+            id="sidebar">
             <section>
-                <img src="/assets/icons/logo.png" alt="logo" class="w-15 h-15 mt-4 ml-4">
+                <img src="/assets/icons/logo.png" alt="logo" class="w-15 h-15 mt-4 ml-4" id="logo">
                 <span
-                    class="font-prim text-2xl text-blue-900 font-extrabold absolute top-4.5 left-20 leading-7">Smart<br>Ledger</span>
+                    class="font-prim text-2xl text-blue-900 font-extrabold absolute top-4.5 left-20 leading-7 dark:text-amber-300 transition-colors duration-500"
+                    id="logoText">Smart<br>Ledger</span>
                 <i data-lucide="panel-left-close"
-                    class="absolute top-8 left-52 text-gray-900 rounded-lg hover:cursor-pointer hover:scale-105"></i>
+                    class="absolute top-8 left-52 text-gray-900  z-50 hover:cursor-pointer hover:scale-105 dark:invert-100 transition-colors duration-300"
+                    id="sideClose"></i>
             </section>
-            <section class="mt-20 ml-8 flex flex-col gap-4">
-                <a href="#" class="menu"><i data-lucide="layout-grid" class="menu-icon"></i>&nbsp;&nbsp;Dashboard</a>
-                <a href="#" class="menu"><i data-lucide="wallet" class="menu-icon"></i>&nbsp;&nbsp;Transaction</a>
-                <a href="#" class="menu"><i data-lucide="history" class="menu-icon"></i>&nbsp;&nbsp;History</a>
-                <a href="#" class="menu"><i data-lucide="settings" class="menu-icon"></i>&nbsp;&nbsp;Settings</a>
+            <section class="mt-20 flex flex-col w-[18vw] gap-3 pl-4 pb-2">
+                <a href="#" class="menu menu-active" data-menu="dashboard"><i data-lucide="layout-grid"
+                        class="menu-icon"></i>&nbsp;&nbsp;Dashboard</a>
+                <a href="#" class="menu" data-menu="transaction"><i data-lucide="wallet"
+                        class="menu-icon"></i>&nbsp;&nbsp;Transaction</a>
+                <a href="#" class="menu" data-menu="history"><i data-lucide="history"
+                        class="menu-icon"></i>&nbsp;&nbsp;History</a>
+                <a href="#" class="menu" data-menu="settings"><i data-lucide="settings"
+                        class="menu-icon"></i>&nbsp;&nbsp;Settings</a>
             </section>
+
+            <template id="fullSide">
+                <section>
+                    <img src="/assets/icons/logo.png" alt="logo" class="w-15 h-15 mt-4 ml-4" id="logo">
+                    <span
+                        class="font-prim text-2xl text-blue-900 font-extrabold absolute top-4.5 left-20 leading-7 dark:text-amber-300 transition-colors duration-500"
+                        id="logoText">Smart<br>Ledger</span>
+                    <i data-lucide="panel-left-close"
+                        class="absolute top-8 left-52 text-gray-900  z-50 hover:cursor-pointer hover:scale-105 dark:text-white"
+                        id="sideClose"></i>
+                </section>
+                <section class="mt-20 flex flex-col w-[18vw] gap-3 pl-4 pb-2">
+                    <a href="#" class="menu" data-menu="dashboard"><i data-lucide="layout-grid"
+                            class="menu-icon"></i>&nbsp;&nbsp;Dashboard</a>
+                    <a href="#" class="menu" data-menu="transaction"><i data-lucide="wallet"
+                            class="menu-icon"></i>&nbsp;&nbsp;Transaction</a>
+                    <a href="#" class="menu" data-menu="history"><i data-lucide="history"
+                            class="menu-icon"></i>&nbsp;&nbsp;History</a>
+                    <a href="#" class="menu" data-menu="settings"><i data-lucide="settings"
+                            class="menu-icon"></i>&nbsp;&nbsp;Settings</a>
+                </section>
+            </template>
+
+            <template id="sideLeft">
+                <section class="flex flex-col items-center gap-4 mt-4">
+                    <i data-lucide="panel-right-close"
+                        class="text-gray-900 w-6 h-6 hover:cursor-pointer hover:scale-105 dark:text-slate-300"
+                        id="sideopen"></i>
+                </section>
+                <section class="mt-10 flex flex-col items-center gap-4">
+                    <a href="#" class="menu menu-icon-only" data-menu="dashboard"><i data-lucide="layout-grid"></i></a>
+                    <a href="#" class="menu menu-icon-only" data-menu="transaction"><i data-lucide="wallet"></i></a>
+                    <a href="#" class="menu menu-icon-only" data-menu="history"><i data-lucide="history"></i></a>
+                    <a href="#" class="menu menu-icon-only" data-menu="settings"><i data-lucide="settings"></i></a>
+                </section>
+            </template>
         </aside>
-        <header class="bg-[#F4F5F7] text-white border-b-2 border-white flex items-center">
-            <h1 class="ml-4 text-2xl font-bold text-[darkslateblue] font-prim">Take control of your money</h1>
+
+        <header
+            class="bg-[#F4F5F7] text-white border-b-2 border-white flex items-center dark:border-b dark:border-slate-300 dark:bg-[#0B0F19] dark:border-slate-800">
+            <h1 class="ml-4 text-2xl font-bold text-[darkslateblue]  font-prim dark:text-amber-100">Take control of your
+                money</h1>
+            <section
+                class="absolute top-4 right-2 text-black flex gap-4 dark:text-white transition-colors duration-300">
+                <figure>
+                    <i data-lucide="search" class="absolute right-23 hover:cursor-pointer z-50 w-5 h-5"
+                        id="searchBtn"></i>
+                </figure>
+                <figure class="opacity-0 pointer-events-none transition-all duration-300" id="searchBar">
+                    <input type="text" id="searchInput"
+                        class="block border absolute w-[14vw] h-8 -top-1.25 right-20 rounded-xl shadow shadow-black outline-none pl-8 pr-8 transition-all font-global"
+                        onkeydown="if(event.key === 'Enter') window.find(this.value)">
+                    <i data-lucide="x" id="clearBtn"
+                        class="absolute z-50 top-0.5 right-21 w-4.5 h-4.5 hover:cursor-pointer"></i>
+                </figure>
+                <figure id="stateMode"><i data-lucide="moon" class="hover:cursor-pointer w-5 h-5"></i></figure>
+                <figure id="notifNone">
+                    <i data-lucide="bell" class="hover:cursor-pointer z-50 w-5 h-5" id="notifBtn"></i>
+                </figure>
+                <template class="relative flex hover:cursor-pointer" id="notification">
+                    <i data-lucide="bell" class="absolute right-4.25 top-0 w-5 h-5"></i>
+                    <span
+                        class="absolute top-[-0.25vh] right-[1.35vw] block h-2.25 w-2.25 rounded-full ring-2 ring-white animate-ping"></span>
+                    <span
+                        class="absolute top-[-0.25vh] right-[1.35vw] block h-2.25 w-2.25 rounded-full bg-red-600"></span>
+                </template>
+            </section>
         </header>
-        <section class="absolute top-4 right-8 text-black flex gap-4">
-            <figure class="flex">
-                <input type="text" class="w-50 h-8 outline-none border rounded-lg absolute -top-1 right-17">
-                <i data-lucide="search" class="hover:cursor-pointer z-50 w-5 h-5" id="searchBtn"></i>
-            </figure>
-            <figure id="stateMode"><i data-lucide="moon" class="hover:cursor-pointer w-5 h-5"></i></figure>
-            <figure id="notification">
-                <i data-lucide="bell" class="hover:cursor-pointer z-50 w-5 h-5" id="notifBtn"></i>
-            </figure>
-        </section>
-        <main class="bg-[#F4F5F7] p-5 overflow-y-auto">Main (Budget Tracker)</main>
+
+        <main class="bg-[#F4F5F7] p-5 overflow-y-auto dark:bg-[#0B0F19] transition-colors duration-400">Main (Budget
+            Tracker)</main>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         lucide.createIcons();
     </script>
+    <script src="/js/app.js"></script>
 </body>
 
 </html>
