@@ -1,4 +1,6 @@
 import { renderPage } from './render.js';
+import { totalExpenses } from '/js/expenses.js';
+import { totalIncomes } from '/js/incomes.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('header');
@@ -9,6 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('sidebar');
     const sideLeftTemplate = document.getElementById('sideLeft');
     const fullSidebar = document.getElementById('fullSide');
+
+    const notifNone = document.getElementById('notifNone');
+    const notifTemplate = document.getElementById('notifTemplate');
+    const notifContent = document.getElementById('notifContent');
+
 
     /*============ HEADER : search, clear, dark mode ============*/
     header.addEventListener('click', (event) => {
@@ -70,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const menuItem = event.target.closest('.menu');
         if (menuItem) {
-            event.preventDefault(); 
+            event.preventDefault();
             activeMenu = menuItem.dataset.menu;
             applyActiveMenu();
             renderPage(activeMenu); // loading active menu on the main side
@@ -93,6 +100,147 @@ document.addEventListener('DOMContentLoaded', () => {
         applyActiveMenu();
     }
 
+    /*============ NOTIFICATIONS : bell state + toggle panel ============*/
+    function showPlainBell() {
+        notifNone.innerHTML = '<i data-lucide="bell" class="hover:cursor-pointer z-50 w-5 h-5" id="notifBtn"></i>';
+        lucide.createIcons();
+        notifContent.classList.add('opacity-0');
+    }
+
+    function showAlertBell(dotColor, pingColor) {
+        notifNone.innerHTML = "";
+        notifNone.appendChild(notifTemplate.content.cloneNode(true));
+
+        const dot = notifNone.querySelector('#notifDot');
+        const ping = notifNone.querySelector('#notifPing');
+        dot.classList.add(dotColor);
+        ping.classList.add(pingColor);
+
+        lucide.createIcons();
+    }
+
+    function notification() {
+        const totalRev = totalIncomes();
+        const totalDep = totalExpenses();
+        const currentBalanceValue = totalRev - totalDep;
+
+        if (totalRev === 0) {
+            showPlainBell();
+            return;
+        }
+
+        if (currentBalanceValue <= totalRev * 0) {
+            showAlertBell('bg-red-800', 'bg-red-600');
+            notifRed();
+        } else if (currentBalanceValue <= totalRev * 0.25) {
+            showAlertBell('bg-orange-600', 'bg-orange-400')
+            notifOrange();
+        } else if (currentBalanceValue <= totalRev * 0.5) {
+            showAlertBell('bg-yellow-500', 'bg-yellow-400');
+            notifYellow();
+        } else if (currentBalanceValue <= totalRev * 0.75) {
+            showAlertBell('bg-blue-500', 'bg-blue-400');
+            notifBlue();
+        } else if (currentBalanceValue <= totalRev * 0.9) {
+            showAlertBell('bg-green-500', 'bg-green-400');
+            notifGreen();
+        } else {
+            showPlainBell();
+        }
+    }
+
+    function notifGreen() {
+        const notifShowToggle = document.getElementById('notifToggle');
+        const notifContent = document.getElementById('notifContent');
+
+        notifShowToggle.addEventListener('click', () => {
+            notifContent.classList.toggle('opacity-0');
+            let notifText = `
+            <div class="p-4 w-auto h-auto ">
+                <p class="text-center p-2 border-b border-slate-300/50 text-gray-950 dark:text-sky-200 font-global">You spent 10% of your current budget.</p>
+            </div>
+            `;
+            notifContent.innerHTML = notifText;
+
+            lucide.createIcons();
+        });
+    }
+
+    function notifBlue() {
+        const notifShowToggle = document.getElementById('notifToggle');
+        const notifContent = document.getElementById('notifContent');
+
+        notifShowToggle.addEventListener('click', () => {
+            notifContent.classList.toggle('opacity-0');
+            let notifText = `
+            <div class="p-4 border-b border-slate-300/50">
+                <p class="text-center text-gray-950 dark:text-sky-200 font-global">You spent more than 25% of your current budget.</p>
+            </div>
+            `;
+            notifContent.innerHTML = notifText;
+
+            lucide.createIcons();
+        });
+    }
+
+    function notifYellow() {
+        const notifShowToggle = document.getElementById('notifToggle');
+        const notifContent = document.getElementById('notifContent');
+
+        notifShowToggle.addEventListener('click', () => {
+            notifContent.classList.toggle('opacity-0');
+            let notifText = `
+            <div class="p-4 border-b border-slate-300/50">
+                <p class="text-center text-gray-950 dark:text-sky-200 font-global">You spent more than 50% of your current budget.</p>
+            </div>
+            `;
+            notifContent.innerHTML = notifText;
+
+            lucide.createIcons();
+        });
+    }
+
+
+    function notifOrange() {
+        const notifShowToggle = document.getElementById('notifToggle');
+        const notifContent = document.getElementById('notifContent');
+
+        notifShowToggle.addEventListener('click', () => {
+            notifContent.classList.toggle('opacity-0');
+            let notifText = `
+            <div class="p-4 border-b border-slate-300/50">
+                <h2 class="text-center text-orange-500! dark:text-yellow-400! font-bold">Warning</h2> 
+                <p class="text-center text-gray-950 dark:text-sky-200 font-global">You spent more than 75% of your current budget</p>
+            </div>
+            `;
+            notifContent.innerHTML = notifText;
+
+            lucide.createIcons();
+        });
+    }
+
+    function notifRed() {
+        const notifShowToggle = document.getElementById('notifToggle');
+        const notifContent = document.getElementById('notifContent');
+
+        notifShowToggle.addEventListener('click', () => {
+            notifContent.classList.toggle('opacity-0');
+            let notifText = `
+            <div class="p-4 border-b border-slate-300/50">
+                <h2 class="text-center text-red-500! dark:text-red-800! font-bold">Alert</h2> 
+                <p class="text-center text-gray-950 dark:text-sky-200 font-global">You have exceeded your total current budget</p>
+            </div>
+            `;
+            notifContent.innerHTML = notifText;
+
+            lucide.createIcons();
+        });
+    }
+
+
     /*============ Initial loading page ============*/
     renderPage(activeMenu);
+    notification();
+
+    document.addEventListener('transactions-changed', notification);
 });

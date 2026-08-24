@@ -12,6 +12,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
     <title>Smart Ledger</title>
+    <link rel="stylesheet" href="/css/style.css">
     <style type="text/tailwindcss">
         /* 1. LIGNE CRITIQUE : Dit à Tailwind v4 de s'activer quand la classe .dark est sur la balise HTML */
         @custom-variant dark (&:where(.dark, .dark *));
@@ -134,9 +135,9 @@
             <h1 class="ml-4 text-2xl font-bold text-[darkslateblue]  font-prim dark:text-amber-100">Take control of your
                 money</h1>
             <section
-                class="absolute top-4 right-2 text-black flex gap-4 dark:text-white transition-colors duration-300">
+                class="absolute top-4 right-6 text-black flex gap-4 dark:text-white transition-colors duration-300">
                 <figure>
-                    <i data-lucide="search" class="absolute right-23 hover:cursor-pointer z-50 w-5 h-5"
+                    <i data-lucide="search" class="absolute right-18 hover:cursor-pointer z-50 w-5 h-5"
                         id="searchBtn"></i>
                 </figure>
                 <figure class="opacity-0 pointer-events-none transition-all duration-300" id="searchBar">
@@ -150,17 +151,21 @@
                 <figure id="notifNone">
                     <i data-lucide="bell" class="hover:cursor-pointer z-50 w-5 h-5" id="notifBtn"></i>
                 </figure>
-                <template class="relative flex hover:cursor-pointer" id="notification">
-                    <i data-lucide="bell" class="absolute right-4.25 top-0 w-5 h-5"></i>
-                    <span
-                        class="absolute top-[-0.25vh] right-[1.35vw] block h-2.25 w-2.25 rounded-full ring-2 ring-white animate-ping"></span>
-                    <span
-                        class="absolute top-[-0.25vh] right-[1.35vw] block h-2.25 w-2.25 rounded-full bg-red-600"></span>
+                <template id="notifTemplate">
+                    <div class="relative flex items-center hover:cursor-pointer" id="notifToggle">
+                        <i data-lucide="bell" class="w-5 h-5"></i>
+                        <span id="notifPing"
+                            class="absolute -top-0.5 right-0 block h-2.25 w-2.25 rounded-full ring-2 ring-white animate-ping"></span>
+                        <span id="notifDot" class="absolute -top-0.5 right-0 block h-2.25 w-2.25 rounded-full"></span>
+                    </div>
                 </template>
             </section>
+            <div id="notifContent"
+                class="w-[16vw] h-[35vh] backdrop-blur-lg shadow-sm shadow-slate-400 absolute top-12 right-6 z-50 opacity-0 rounded-md flex flex-col items-center">
+            </div>
         </header>
 
-        <main class="bg-[#F4F5F7] p-5 overflow-y-auto dark:bg-[#0B0F19] transition-colors duration-400"
+        <main class="bg-[#F4F5F7] p-5 overflow-y-auto dark:bg-[#0B0F19] transition-colors duration-400 scrollbar-thin"
             id="mainContent">
         </main>
     </div>
