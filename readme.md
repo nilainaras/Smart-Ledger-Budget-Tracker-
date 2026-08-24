@@ -2,6 +2,12 @@
 
 Smart Ledger is a personal finance dashboard for tracking expenses and income, built entirely with vanilla JavaScript — no frameworks, no backend, no build step.
 
+<p align="center">
+  <img src="/assets/screenshots/light.png" width="45%" />
+  <img src="/assets/screenshots/dark.png" width="45%" />
+</p>
+
+
 ## Features
 
 - **Transactions** — add expenses and income, each tied to a category
@@ -58,6 +64,23 @@ smart-ledger/
 ```
 
 Each page under `pages/` is its own standalone HTML file paired with a dedicated JS controller, sharing common logic from `js/` (storage, rendering, settings).
+
+## Screenshots
+
+<p align="center">
+  <img src="/assets/screenshots/reducelight.png" width="45%" />
+  <img src="/assets/screenshots/reducedark.png" width="45%" />
+</p>
+
+<p align="center">
+  <img src="/assets/screenshots/dark.png" width="45%" />
+  <img src="/assets/screenshots/transaction.png" width="45%" />
+</p>
+
+<p align="center">
+  <img src="/assets/screenshots/settings.png" width="45%" />
+  <img src="/assets/screenshots/history.png" width="45%" />
+</p>
 
 ## Getting Started
 

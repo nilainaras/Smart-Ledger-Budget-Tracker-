@@ -1,3 +1,4 @@
+// transactions.js
 import { allExpenses, addExpense, deleteExpense, expenseCategories } from '/js/expenses.js';
 import { allIncomes, addIncome, deleteIncome, incomeCategories } from '/js/incomes.js';
 
@@ -85,7 +86,7 @@ export function init() {
 
         listEl.querySelectorAll('.delete-btn').forEach((btn) => {
             btn.addEventListener('click', () => {
-                deleteFn(Number(btn.dataset.id));
+                deleteFn(btn.dataset.id);
                 updateLists();
             });
         });

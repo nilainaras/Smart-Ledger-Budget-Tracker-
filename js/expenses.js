@@ -1,3 +1,4 @@
+// expenses.js
 import { saveData, loadData } from '/js/storage.js';
 
 const defaultExpenses = [];
@@ -11,10 +12,7 @@ const defaultExpenseCategories = [
     { name: "Other", icon: "📦" }
 ].map((cat, index) => ({ ...cat, id: index + 1 }));
 
-<<<<<<< HEAD
 // On relit depuis localStorage, en reconvertissant les dates (JSON les transforme en texte)
-=======
->>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
 let allExpenses = loadData('expenses', defaultExpenses).map((item) => ({
     ...item,
     date: new Date(item.date)
@@ -35,14 +33,10 @@ let totalExpenses = () => allExpenses.reduce((acc, val) => acc + val.amount, 0);
 /*============ Transactions ============*/
 function addExpense(amount, category) {
     const newExpense = {
-        id: Date.now(),
+        id: crypto.randomUUID(),
         category: category,
         amount: parseFloat(amount),
-<<<<<<< HEAD
         date: new Date()
-=======
-        date: new Date().toLocaleString()
->>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
     };
     allExpenses.push(newExpense);
     persistExpenses();
@@ -50,8 +44,7 @@ function addExpense(amount, category) {
 }
 
 function deleteExpense(id) {
-    const targetId = Number(id);
-    const index = allExpenses.findIndex((item) => item.id === targetId);
+    const index = allExpenses.findIndex((item) => item.id === id);
     if (index !== -1) {
         allExpenses.splice(index, 1);
         persistExpenses();

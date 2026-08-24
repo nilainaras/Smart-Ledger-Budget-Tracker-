@@ -8,11 +8,6 @@ let listenersAttached = false;
 export function init() {
     render();
 
-<<<<<<< HEAD
-=======
-    // On n'attache les listeners qu'une seule fois, même si init() est rappelée
-    // plusieurs fois par le router, pour éviter qu'ils s'accumulent
->>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
     if (!listenersAttached) {
         document.addEventListener('transactions-changed', render);
         document.addEventListener('settings-changed', render);
@@ -155,46 +150,4 @@ function render() {
     });
     chartEvolution.render();
     charts.push(chartEvolution);
-
-<<<<<<< HEAD
-=======
-    /*============= CHART 6: SPENDING HEATMAP ================*/
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const dailyTotals = {};
-    for (let d = 1; d <= daysInMonth; d++) dailyTotals[d] = 0;
-    monthExpenses.forEach((e) => { dailyTotals[e.date.getDate()] += e.amount; });
-
-    const dayEntries = Object.entries(dailyTotals);
-    const weeks = [];
-    for (let i = 0; i < dayEntries.length; i += 7) {
-        weeks.push(dayEntries.slice(i, i + 7));
-    }
-
-    const heatmapSeries = weeks.map((week, index) => ({
-        name: `Week ${index + 1}`,
-        data: week.map(([day, amount]) => ({ x: `Day ${day}`, y: Math.round(amount * 100) / 100 }))
-    })).reverse();
-
-    const chartHeatmap = new ApexCharts(document.querySelector("#spendingHeatmap"), {
-        chart: { type: 'heatmap', height: 220, toolbar: { show: false } },
-        series: heatmapSeries,
-        dataLabels: { enabled: false },
-        plotOptions: {
-            heatmap: {
-                radius: 4,
-                colorScale: {
-                    ranges: [
-                        { from: 0, to: 0, color: '#F3F4F6', name: 'No spend' },
-                        { from: 0.01, to: 50, color: '#FCA5A5', name: 'Low' },
-                        { from: 50.01, to: 150, color: '#F87171', name: 'Medium' },
-                        { from: 150.01, to: 999999, color: '#DC2626', name: 'High' }
-                    ]
-                }
-            }
-        },
-        tooltip: { y: { formatter: (val) => formatter.format(val) } }
-    });
-    chartHeatmap.render();
-    charts.push(chartHeatmap);
->>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
 }

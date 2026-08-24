@@ -1,3 +1,4 @@
+// incomes.js
 import { saveData, loadData } from '/js/storage.js';
 
 const defaultIncomes = [];
@@ -30,14 +31,10 @@ let totalIncomes = () => allIncomes.reduce((acc, val) => acc + val.amount, 0);
 /*============ Transactions ============*/
 function addIncome(amount, category) {
     const newIncome = {
-        id: Date.now(),
+        id: crypto.randomUUID(),
         category: category,
         amount: parseFloat(amount),
-<<<<<<< HEAD
         date: new Date()
-=======
-        date: new Date().toLocaleString()
->>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
     };
     allIncomes.push(newIncome);
     persistIncomes();
@@ -45,8 +42,7 @@ function addIncome(amount, category) {
 }
 
 function deleteIncome(id) {
-    const targetId = Number(id);
-    const index = allIncomes.findIndex((item) => item.id === targetId);
+    const index = allIncomes.findIndex((item) => item.id === id);
     if (index !== -1) {
         allIncomes.splice(index, 1);
         persistIncomes();
