@@ -1,6 +1,10 @@
 const STORAGE_PREFIX = 'smartledger_';
 
+<<<<<<< HEAD
 /*============ Enregistrer une donnée ============*/
+=======
+/*============ Save data ============*/
+>>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
 function saveData(key, data) {
     try {
         localStorage.setItem(STORAGE_PREFIX + key, JSON.stringify(data));
@@ -9,7 +13,11 @@ function saveData(key, data) {
     }
 }
 
+<<<<<<< HEAD
 /*============ Lire une donnée ============*/
+=======
+/*============ Read data ============*/
+>>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
 function loadData(key, fallback) {
     try {
         const raw = localStorage.getItem(STORAGE_PREFIX + key);
@@ -21,7 +29,11 @@ function loadData(key, fallback) {
     }
 }
 
+<<<<<<< HEAD
 /*============ Tout effacer (pour le bouton reset) ============*/
+=======
+/*============ Reset app ============*/
+>>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
 function clearAll() {
     Object.keys(localStorage)
         .filter((key) => key.startsWith(STORAGE_PREFIX))

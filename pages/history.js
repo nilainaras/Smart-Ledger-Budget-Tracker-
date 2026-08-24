@@ -14,7 +14,10 @@ export function init() {
     document.addEventListener('transactions-changed', () => {
         const previousValue = monthSelect.value;
         populateMonthSelect(monthSelect);
+<<<<<<< HEAD
         // On garde le mois sélectionné s'il existe encore, sinon on retombe sur le premier
+=======
+>>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
         if ([...monthSelect.options].some(opt => opt.value === previousValue)) {
             monthSelect.value = previousValue;
         }
@@ -22,7 +25,10 @@ export function init() {
         render(month, year);
     });
 
+<<<<<<< HEAD
     // Affichage initial : mois en cours si dispo, sinon le plus récent
+=======
+>>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
     const [year, month] = monthSelect.value.split('-').map(Number);
     render(month, year);
 }
@@ -35,11 +41,18 @@ function populateMonthSelect(monthSelect) {
         allTransactions.map((t) => `${t.date.getFullYear()}-${t.date.getMonth()}`)
     );
 
+<<<<<<< HEAD
     // On s'assure que le mois en cours est toujours proposé, même sans transaction
     const now = new Date();
     monthsSet.add(`${now.getFullYear()}-${now.getMonth()}`);
 
     const monthsArray = [...monthsSet].sort().reverse(); // du plus récent au plus ancien
+=======
+    const now = new Date();
+    monthsSet.add(`${now.getFullYear()}-${now.getMonth()}`);
+
+    const monthsArray = [...monthsSet].sort().reverse(); 
+>>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
 
     monthSelect.innerHTML = '';
     monthsArray.forEach((key) => {

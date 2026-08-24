@@ -11,7 +11,10 @@ const defaultExpenseCategories = [
     { name: "Other", icon: "📦" }
 ].map((cat, index) => ({ ...cat, id: index + 1 }));
 
+<<<<<<< HEAD
 // On relit depuis localStorage, en reconvertissant les dates (JSON les transforme en texte)
+=======
+>>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
 let allExpenses = loadData('expenses', defaultExpenses).map((item) => ({
     ...item,
     date: new Date(item.date)
@@ -35,7 +38,11 @@ function addExpense(amount, category) {
         id: Date.now(),
         category: category,
         amount: parseFloat(amount),
+<<<<<<< HEAD
         date: new Date()
+=======
+        date: new Date().toLocaleString()
+>>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
     };
     allExpenses.push(newExpense);
     persistExpenses();

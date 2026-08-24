@@ -33,7 +33,11 @@ function addIncome(amount, category) {
         id: Date.now(),
         category: category,
         amount: parseFloat(amount),
+<<<<<<< HEAD
         date: new Date()
+=======
+        date: new Date().toLocaleString()
+>>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
     };
     allIncomes.push(newIncome);
     persistIncomes();

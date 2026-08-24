@@ -5,7 +5,10 @@ import { clearAll } from '/js/storage.js';
 
 let currentType = 'expense';
 
+<<<<<<< HEAD
 export { nicknameInput };
+=======
+>>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
 export function init() {
     const btnExpense = document.getElementById('btnExpense');
     const btnIncome = document.getElementById('btnIncome');
@@ -126,12 +129,20 @@ export function init() {
 
     const budgetInput = document.getElementById('budgetInput');
 
+<<<<<<< HEAD
+=======
+    // dans loadSettingsIntoForm()
+>>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
     function loadSettingsIntoForm() {
         const { nickname, monthlyBudget } = getSettings();
         nicknameInput.value = nickname;
         budgetInput.value = monthlyBudget || '';
     }
 
+<<<<<<< HEAD
+=======
+    // nouveau listener
+>>>>>>> 6abd46415789b73de99de8035521418835dcb9cc
     budgetInput.addEventListener('input', () => {
         updateSettings({ monthlyBudget: parseFloat(budgetInput.value) || 0 });
     });
