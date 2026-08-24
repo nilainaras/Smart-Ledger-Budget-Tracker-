@@ -1,14 +1,42 @@
 <section class="grid grid-cols-3 gap-4">
-    <div class="bg-white p-4 rounded-xl dark:bg-slate-800">
-        <p class="text-sm text-gray-500 dark:text-slate-400">Solde total</p>
-        <p class="text-2xl font-bold dark:text-slate-100" id="totalBalance">0 Ar</p>
+
+    <!-- Box 1: Current Balance -->
+    <div
+        class="bg-white p-6 rounded-xl dark:bg-slate-800 flex flex-col justify-between items-center text-center min-h-70">
+        <div>
+            <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Current Balance</h3>
+            <p id="textBalance" class="text-2xl font-bold text-slate-800 dark:text-white mt-1">$0.00</p>
+        </div>
+        <div class="w-full my-2">
+            <div id="currentBalance"></div>
+        </div>
+        <span class="text-xs text-gray-400">Available budget remaining</span>
     </div>
-    <div class="bg-white p-4 rounded-xl dark:bg-slate-800">
-        <p class="text-sm text-gray-500 dark:text-slate-400">Revenus ce mois</p>
-        <p class="text-2xl font-bold text-green-600 dark:text-green-400" id="totalIncome">0 Ar</p>
+
+    <!-- Box 2: Total Expenses -->
+    <div
+        class="bg-white p-6 rounded-xl dark:bg-slate-800 flex flex-col justify-between items-center text-center min-h-70">
+        <div>
+            <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Total Expenses</h3>
+            <p id="textExpenses" class="text-2xl font-bold text-red-500 mt-1">$0.00</p>
+        </div>
+        <div class="w-full my-2">
+            <div id="expenses"></div>
+        </div>
+        <span class="text-xs text-gray-400">Money spent this month</span>
     </div>
-    <div class="bg-white p-4 rounded-xl dark:bg-slate-800">
-        <p class="text-sm text-gray-500 dark:text-slate-400">Dépenses ce mois</p>
-        <p class="text-2xl font-bold text-red-600 dark:text-red-400" id="totalExpenses">0 Ar</p>
+
+    <!-- Box 3: Total Incomes -->
+    <div
+        class="bg-white p-6 rounded-xl dark:bg-slate-800 flex flex-col justify-between items-center text-center min-h-70">
+        <div>
+            <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Total Incomes</h3>
+            <p id="textIncomes" class="text-2xl font-bold text-green-500 mt-1">$0.00</p>
+        </div>
+        <div class="w-full my-2">
+            <div id="incomes"></div>
+        </div>
+        <span class="text-xs text-gray-400">Total money earned</span>
     </div>
+
 </section>
